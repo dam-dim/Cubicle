@@ -4,7 +4,8 @@ const uniqid = require("uniqid");
 const Cube = require("../models/Cube");
 
 exports.getAllCubes = async (search, from, to) => {
-  let filteredCubes = JSON.parse(await readDatabase());
+  let filteredCubes = await Cube.find();
+  filteredCubes = filteredCubes.map((cube) => cube.toJSON());
 
   if (search) {
     filteredCubes = filteredCubes.filter((cube) =>
@@ -48,19 +49,7 @@ exports.deleteCube = async (id) => {
 
 exports.updateCube = () => {};
 
-exports.findCube = async (id) => {
-  const cubes = await this.getAllCubes();
-  let output = {};
-
-  for (const cube of cubes) {
-    if (cube.id === id) {
-      output = cube;
-      break;
-    }
-  }
-
-  return output;
-};
+exports.findCubeById = (id) => Cube.findById(id);
 
 const readDatabase = () => {
   return fs.readFile(
