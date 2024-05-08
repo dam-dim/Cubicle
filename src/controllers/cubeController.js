@@ -20,14 +20,14 @@ router.post("/create", async (req, res) => {
 
 router.get("/details/:cubeId", async (req, res) => {
   const cubeId = req.params.cubeId;
-  const cube = await cubeService.findCubeById(cubeId);
+  const cube = await cubeService.findCubeById(cubeId).lean();
   res.render("details", { cube });
 });
 
 router.get("/attach-accessory/:cubeId", async (req, res) => {
   // TODO
   const cubeId = req.params.cubeId;
-  const cube = await cubeService.findCubeById(cubeId);
+  const cube = await cubeService.findCubeById(cubeId).lean();
   res.render("attachAccessory", { cube });
 });
 
