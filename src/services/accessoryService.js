@@ -9,3 +9,7 @@ exports.createAccessory = async (newAccessory) => {
 exports.getAll = () => {
   return Accessory.find();
 };
+
+exports.findById = (id) => {
+  return Accessory.findById(id);
+};

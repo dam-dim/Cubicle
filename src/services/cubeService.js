@@ -1,4 +1,5 @@
 const Cube = require("../models/Cube");
+const accessoryService = require("./accessoryService");
 
 exports.getAllCubes = async (search, from, to) => {
   let filteredCubes = await Cube.find().lean();
@@ -34,18 +35,20 @@ exports.createCube = async (cubeData) => {
   return cube;
 };
 
-exports.deleteCube = async (id) => {
-  let cubes = await this.getAllCubes();
-  const cube = await findCube(id);
-  const index = cubes.indexOf(cube);
-
-  cubes = cubes.splice(index, 1);
-
-  await writeDatabase(cubes);
-};
-
-exports.updateCube = () => {};
-
 exports.findCubeById = (id) => {
   return Cube.findById(id);
+};
+
+exports.attachAccessory = async (cubeId, accessoryId) => {
+  const cube = await this.findCubeById(cubeId);
+
+  // TODO: Check if the accessory is present in the collection
+  cube.accessories.push(accessoryId);
+  return cube.save();
+};
+
+exports.getAllAccessories = async (cubeId) => {
+  const cube = await this.findCubeById(cubeId).lean();
+
+  return cube.accessories;
 };
