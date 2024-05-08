@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs/promises");
-const crypto = require("crypto");
 const uniqid = require("uniqid");
+const Cube = require("../models/Cube");
 
 exports.getAllCubes = async (search, from, to) => {
   let filteredCubes = JSON.parse(await readDatabase());
@@ -27,18 +27,13 @@ exports.getAllCubes = async (search, from, to) => {
   return filteredCubes;
 };
 
-exports.createCube = async (name, description, imageUrl, difficulty) => {
-  const newCube = { name, description, imageUrl, difficulty };
+exports.createCube = async (cubeData) => {
+  const cube = await Cube.create(cubeData);
 
-  const cubes = await this.getAllCubes();
+  // const cube = new Cube(cubeData);
+  // await cube.save();
 
-  newCube["id"] = getRandomId();
-
-  cubes.push(newCube);
-
-  await writeDatabase(cubes);
-
-  return newCube;
+  return cube;
 };
 
 exports.deleteCube = async (id) => {

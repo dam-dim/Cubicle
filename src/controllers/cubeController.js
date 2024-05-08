@@ -8,7 +8,7 @@ router.get("/create", async (req, res) => {
 router.post("/create", async (req, res) => {
   const { name, description, difficultyLevel, imageUrl } = req.body;
 
-  await createCube(name, description, imageUrl, difficultyLevel);
+  await createCube({ name, description, imageUrl, difficultyLevel });
 
   res.redirect("/");
 });
