@@ -5,3 +5,7 @@ exports.createAccessory = async (newAccessory) => {
 
   return accessory;
 };
+
+exports.getAll = () => {
+  return Accessory.find();
+};

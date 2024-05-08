@@ -7,7 +7,6 @@ router.get("/create", (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-  // TODO: implement creation and saving of new accessories
   const newAccessory = { ...req.body };
 
   await accessoryService.createAccessory(newAccessory);
