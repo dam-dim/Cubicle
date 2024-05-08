@@ -49,7 +49,10 @@ exports.deleteCube = async (id) => {
 
 exports.updateCube = () => {};
 
-exports.findCubeById = (id) => Cube.findById(id);
+exports.findCubeById = async (id) => {
+  const cube = await Cube.findById(id);
+  return cube.toJSON();
+};
 
 const readDatabase = () => {
   return fs.readFile(
