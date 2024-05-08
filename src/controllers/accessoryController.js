@@ -1,16 +1,17 @@
 const router = require("express").Router();
+const Accessory = require("../models/Accessory");
+const accessoryService = require("../services/accessoryService");
 
 router.get("/create", (req, res) => {
   res.render("accessory/create");
 });
 
-router.post("/create", (req, res) => {
+router.post("/create", async (req, res) => {
   // TODO: implement creation and saving of new accessories
-  const accessory = { ...req.body };
-  console.log(accessory);
+  const newAccessory = { ...req.body };
 
-  console.log("Successfully added a new accessory!");
-  res.redirect("/accessory/create");
+  await accessoryService.createAccessory(newAccessory);
+  res.redirect("/");
 });
 
 module.exports = router;
