@@ -1,6 +1,3 @@
-const path = require("path");
-const fs = require("fs/promises");
-const uniqid = require("uniqid");
 const Cube = require("../models/Cube");
 
 exports.getAllCubes = async (search, from, to) => {
@@ -50,36 +47,4 @@ exports.updateCube = () => {};
 
 exports.findCubeById = (id) => {
   return Cube.findById(id);
-};
-
-const readDatabase = () => {
-  return fs.readFile(
-    path.resolve(__dirname, "../database/database.json"),
-    "utf-8",
-    (err, data) => {
-      if (err) {
-        console.log("Error in reading all cubes! >> cubeService.js");
-      }
-    }
-  );
-};
-
-const writeDatabase = (toWrite) => {
-  return fs.writeFile(
-    path.resolve(__dirname, "../database/database.json"),
-    JSON.stringify(toWrite),
-    "utf-8",
-    (err) => {
-      if (err) {
-        console.log(
-          "Error in writing to the database! >> cubeService.js >> createCube()"
-        );
-      }
-    }
-  );
-};
-
-const getRandomId = () => {
-  return uniqid();
-  //return crypto.randomBytes(6).toString("hex");
 };
