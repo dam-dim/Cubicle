@@ -40,13 +40,11 @@ router.get("/details/:cubeId", async (req, res) => {
 });
 
 router.get("/attach-accessory/:cubeId", async (req, res) => {
-  // TODO
   const cubeId = req.params.cubeId;
-
-  // TODO: get all accessories not present for the cube
-
-  const allAccessories = await accessoryService.getAll().lean();
   const cube = await cubeService.findCubeById(cubeId).lean();
+
+  // getting the accessories which the cube with cubeId does not own
+  const accessories = await accessoryService.findWithoutOwned(cubeId);
 
   const hasAccessories = accessories.length > 0;
 
@@ -54,7 +52,6 @@ router.get("/attach-accessory/:cubeId", async (req, res) => {
 });
 
 router.post("/attach-accessory/:cubeId", async (req, res) => {
-  // TODO
   const cubeId = req.params.cubeId;
   const accessoryId = req.body.accessory;
 

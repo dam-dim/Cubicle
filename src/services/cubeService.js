@@ -42,13 +42,48 @@ exports.findCubeById = (id) => {
 exports.attachAccessory = async (cubeId, accessoryId) => {
   const cube = await this.findCubeById(cubeId);
 
-  // TODO: Check if the accessory is present in the collection
-  cube.accessories.push(accessoryId);
-  return cube.save();
+  const hasAccessory = cube.accessories.includes(accessoryId);
+
+  if (!hasAccessory) {
+    cube.accessories.push(accessoryId);
+    return cube.save();
+  }
 };
 
 exports.getAllAccessories = async (cubeId) => {
   const cube = await Cube.findById(cubeId).populate("accessories").lean();
 
   return cube.accessories;
+};
+
+exports.getAccessoriesNotPresent = async (cubeId) => {
+  // TODO
+  let accessories = [];
+  const cube = await Cube.findById(cubeId).populate("accessories").lean();
+  const cubeAccessories = cube.accessories ? cube.accessories : [];
+  const allAccessories = await accessoryService.getAll().lean();
+
+  console.log(cubeAccessories[0], allAccessories[0]);
+
+  for (const accessory of allAccessories) {
+    if (!cubeAccessories.includes(accessory)) {
+      accessories.push(accessory);
+    }
+  }
+
+  return accessories;
+};
+
+exports.getAccessoryIds = async (cubeId) => {
+  let ids = [];
+  const cube = await Cube.findById(cubeId).lean();
+
+  if (cube.accessories) {
+    cube.accessories.forEach((accessory) => {
+      console.log(accessory.toString());
+      ids.push(accessory.toString());
+    });
+  }
+
+  return ids;
 };
