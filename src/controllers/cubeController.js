@@ -9,29 +9,43 @@ router.get("/create", async (req, res) => {
 router.post("/create", async (req, res) => {
   const { name, description, difficulty, imageUrl } = req.body;
 
-  await cubeService.createCube({
-    name,
-    description,
-    imageUrl,
-    difficulty,
-  });
+  try {
+    await cubeService.createCube({
+      name,
+      description,
+      imageUrl,
+      difficulty,
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
 
   res.redirect("/");
 });
 
 router.get("/details/:cubeId", async (req, res) => {
   const cubeId = req.params.cubeId;
-  const cube = await cubeService.findCubeById(cubeId).lean();
-  const accessories = await cubeService.getAllAccessories(cubeId);
-  console.log(accessories[0]);
-  res.render("cube/details", { cube });
+
+  try {
+    const cube = await cubeService
+      .findCubeById(cubeId)
+      .populate("accessories")
+      .lean();
+
+    // TODO: add validation for the cube if present
+    res.render("cube/details", { cube });
+  } catch (e) {
+    console.log(e.message);
+  }
 });
 
 router.get("/attach-accessory/:cubeId", async (req, res) => {
   // TODO
   const cubeId = req.params.cubeId;
 
-  const accessories = await accessoryService.getAll().lean();
+  // TODO: get all accessories not present for the cube
+
+  const allAccessories = await accessoryService.getAll().lean();
   const cube = await cubeService.findCubeById(cubeId).lean();
 
   const hasAccessories = accessories.length > 0;

@@ -48,7 +48,7 @@ exports.attachAccessory = async (cubeId, accessoryId) => {
 };
 
 exports.getAllAccessories = async (cubeId) => {
-  const cube = await this.findCubeById(cubeId).lean();
+  const cube = await Cube.findById(cubeId).populate("accessories").lean();
 
   return cube.accessories;
 };
