@@ -60,4 +60,26 @@ router.post("/attach-accessory/:cubeId", async (req, res) => {
   res.redirect(`/cubes/details/${req.params.cubeId}`);
 });
 
+router.get("/edit/:cubeId", async (req, res) => {
+  const cubeId = req.params.cubeId;
+  const cube = await cubeService.findCubeById(cubeId).lean();
+  res.render("cube/edit", { cube });
+});
+
+router.post("/edit/:cubeId", (req, res) => {
+  // TODO: add functionality for edidting the cube
+  res.render("cube/edit");
+});
+
+router.get("/delete/:cubeId", async (req, res) => {
+  const cubeId = req.params.cubeId;
+  const cube = await cubeService.findCubeById(cubeId).lean();
+  res.render("cube/delete", { cube });
+});
+
+router.post("/delete/:cubeId", (req, res) => {
+  // TODO: add functionality for deleting the cube
+  res.render("cube/delete");
+});
+
 module.exports = router;

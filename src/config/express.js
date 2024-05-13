@@ -2,6 +2,7 @@ const express = require("express");
 const handlebars = require("express-handlebars");
 const path = require("path");
 const router = require("./router");
+const helpers = require("../utils/setHelpers");
 
 module.exports = (app) => {
   // TODO: Logging the path and method
@@ -14,6 +15,9 @@ module.exports = (app) => {
   app.engine("hbs", handlebars.engine({ extname: "hbs" }));
   app.set("view engine", "hbs");
   app.set("views", "src/views");
+
+  // TODO: Setup the handlebars helpers
+  helpers.select();
 
   // TODO: Setup the body parser
   app.use(express.urlencoded({ extended: false }));
