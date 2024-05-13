@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-// TODO: add collection of Accessories
-
 const cubeSchema = new mongoose.Schema({
   name: String,
   imageUrl: String,
