@@ -54,7 +54,6 @@ exports.getAllAccessories = async (cubeId) => {
 };
 
 exports.getAccessoriesNotPresent = async (cubeId) => {
-  // TODO
   let accessories = [];
   const cube = await Cube.findById(cubeId).populate("accessories").lean();
   const cubeAccessories = cube.accessories ? cube.accessories : [];
