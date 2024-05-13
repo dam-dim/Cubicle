@@ -29,9 +29,6 @@ exports.getAllCubes = async (search, from, to) => {
 exports.createCube = async (cubeData) => {
   const cube = await Cube.create(cubeData);
 
-  // const cube = new Cube(cubeData);
-  // await cube.save();
-
   return cube;
 };
 
@@ -80,7 +77,6 @@ exports.getAccessoryIds = async (cubeId) => {
 
   if (cube.accessories) {
     cube.accessories.forEach((accessory) => {
-      console.log(accessory.toString());
       ids.push(accessory.toString());
     });
   }
