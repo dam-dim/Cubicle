@@ -5,12 +5,14 @@ router.get("/login", (req, res) => {
   res.render("user/login");
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   // TODO
   const { username, password } = req.body;
   const credentials = { username, password };
 
-  res.redirect("/users/login");
+  const user = await userService.login(credentials);
+
+  res.redirect("/");
 });
 
 router.get("/register", (req, res) => {
@@ -21,7 +23,7 @@ router.post("/register", async (req, res) => {
   const { username, password, repeatPassword } = req.body;
   await userService.register({ username, password, repeatPassword });
 
-  res.redirect("/users/register");
+  res.redirect("/users/login");
 });
 
 module.exports = router;
