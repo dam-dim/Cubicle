@@ -15,6 +15,7 @@ router.post("/create", async (req, res) => {
       description,
       imageUrl,
       difficulty,
+      owner: req.user,
     });
   } catch (e) {
     console.log(e.message);
