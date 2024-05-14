@@ -1,14 +1,15 @@
 const router = require("express").Router();
 const userService = require("../services/userService");
+const { isAuth, isNotAuth } = require("../middlewares/authMiddleware");
 
-router.get("/login", (req, res) => {
+router.get("/login", isNotAuth, (req, res) => {
   const { user } = req;
   console.log({ user });
 
   res.render("user/login");
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", isNotAuth, async (req, res) => {
   // TODO
   const { username, password } = req.body;
   const credentials = { username, password };
@@ -20,11 +21,11 @@ router.post("/login", async (req, res) => {
   res.redirect("/");
 });
 
-router.get("/register", (req, res) => {
+router.get("/register", isNotAuth, (req, res) => {
   res.render("user/register");
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", isNotAuth, async (req, res) => {
   const { username, password, repeatPassword } = req.body;
   await userService.register({
     username,
@@ -35,7 +36,7 @@ router.post("/register", async (req, res) => {
   res.redirect("/users/login");
 });
 
-router.get("/logout", (req, res) => {
+router.get("/logout", isAuth, (req, res) => {
   res.clearCookie("auth");
 
   res.redirect("/");
