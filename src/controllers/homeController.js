@@ -12,12 +12,6 @@ router.get("/about", (req, res) => {
   res.render("about");
 });
 
-router.get("/logout", (req, res) => {
-  console.log("Logged out!");
-  // TODO: add functionality
-  res.redirect("/");
-});
-
 router.get("/404", (req, res) => {
   res.status(404).render("404");
 });

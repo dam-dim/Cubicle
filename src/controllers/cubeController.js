@@ -33,10 +33,13 @@ router.get("/details/:cubeId", async (req, res) => {
       .populate("accessories")
       .lean();
 
+    const isOwner = req.user ? cube.owner?.toString() === req.user._id : false;
+
     // TODO: add validation for the cube if present
-    res.render("cube/details", { cube });
+    res.render("cube/details", { cube, isOwner });
   } catch (e) {
     console.log(e.message);
+    res.redirect("/404");
   }
 });
 
