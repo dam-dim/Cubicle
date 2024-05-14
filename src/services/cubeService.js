@@ -82,3 +82,5 @@ exports.getAccessoryIds = async (cubeId) => {
 
   return ids;
 };
+
+exports.update = async (id, cubeData) => Cube.findByIdAndUpdate(id, cubeData);

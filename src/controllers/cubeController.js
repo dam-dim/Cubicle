@@ -67,9 +67,19 @@ router.get("/edit/:cubeId", async (req, res) => {
   res.render("cube/edit", { cube });
 });
 
-router.post("/edit/:cubeId", (req, res) => {
-  // TODO: add functionality for edidting the cube
-  res.render("cube/edit");
+router.post("/edit/:cubeId", async (req, res) => {
+  const { name, description, imageUrl, difficulty } = req.body;
+  const { cubeId } = req.params;
+  const payload = {
+    name,
+    imageUrl,
+    difficulty,
+    description,
+  };
+
+  await cubeService.update(cubeId, payload);
+
+  res.redirect(`/cubes/details/${cubeId}`);
 });
 
 router.get("/delete/:cubeId", async (req, res) => {
@@ -80,7 +90,8 @@ router.get("/delete/:cubeId", async (req, res) => {
 
 router.post("/delete/:cubeId", (req, res) => {
   // TODO: add functionality for deleting the cube
-  res.render("cube/delete");
+
+  res.redirect("/");
 });
 
 module.exports = router;
