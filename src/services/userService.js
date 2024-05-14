@@ -2,7 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("../lib/jwt");
 
-const SECRET = "My Secret"; // <--- This can be in separate file
+const { SECRET } = require("../constants/constants");
 
 exports.register = (credentials) => {
   return User.create(credentials);

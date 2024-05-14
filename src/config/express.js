@@ -4,6 +4,7 @@ const path = require("path");
 const router = require("./router");
 const helpers = require("../utils/setHelpers");
 const cookieParser = require("cookie-parser");
+const { auth } = require("../middlewares/authMiddleware");
 
 module.exports = (app) => {
   // TODO: Logging the path and method
@@ -28,6 +29,9 @@ module.exports = (app) => {
 
   // TODO: Setup cookie parser
   app.use(cookieParser());
+
+  // TODO: Setup auth middleware
+  app.use(auth);
 
   // TODO: Setup the router
   app.use(router);

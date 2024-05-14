@@ -2,6 +2,9 @@ const router = require("express").Router();
 const userService = require("../services/userService");
 
 router.get("/login", (req, res) => {
+  const { user } = req;
+  console.log({ user });
+
   res.render("user/login");
 });
 
