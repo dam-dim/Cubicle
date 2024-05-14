@@ -3,6 +3,7 @@ const handlebars = require("express-handlebars");
 const path = require("path");
 const router = require("./router");
 const helpers = require("../utils/setHelpers");
+const cookieParser = require("cookie-parser");
 
 module.exports = (app) => {
   // TODO: Logging the path and method
@@ -24,6 +25,9 @@ module.exports = (app) => {
 
   // TODO: Setup the static files
   app.use(express.static(path.resolve(__dirname, "../../public")));
+
+  // TODO: Setup cookie parser
+  app.use(cookieParser());
 
   // TODO: Setup the router
   app.use(router);
