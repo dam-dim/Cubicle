@@ -88,8 +88,11 @@ router.get("/delete/:cubeId", async (req, res) => {
   res.render("cube/delete", { cube });
 });
 
-router.post("/delete/:cubeId", (req, res) => {
+router.post("/delete/:cubeId", async (req, res) => {
   // TODO: add functionality for deleting the cube
+  const { cubeId } = req.params;
+
+  await cubeService.delete(cubeId);
 
   res.redirect("/");
 });
