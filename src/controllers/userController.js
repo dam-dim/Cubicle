@@ -11,11 +11,16 @@ router.post("/login", isNotAuth, async (req, res) => {
   const { username, password } = req.body;
   const credentials = { username, password };
 
-  const token = await userService.login(credentials);
+  try {
+    const token = await userService.login(credentials);
 
-  res.cookie("auth", token, { httpOnly: true });
+    res.cookie("auth", token, { httpOnly: true });
 
-  res.redirect("/");
+    res.redirect("/");
+  } catch (error) {
+    res.cookie("error", error.message, { httpOnly: true });
+    res.redirect("/404");
+  }
 });
 
 router.get("/register", isNotAuth, (req, res) => {
@@ -38,7 +43,7 @@ router.post("/register", isNotAuth, async (req, res) => {
 
     res.cookie("error", error.message, { httpOnly: true });
 
-    res.redirect("/404");
+    res.render("user/register", { error });
   }
 });
 

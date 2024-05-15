@@ -16,6 +16,7 @@ router.get("/about", (req, res) => {
 
 router.get("/404", (req, res) => {
   const error = req.cookies["error"];
+
   res.clearCookie("error");
 
   res.status(404).render("404", { error });
