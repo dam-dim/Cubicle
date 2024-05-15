@@ -3,9 +3,6 @@ const userService = require("../services/userService");
 const { isAuth, isNotAuth } = require("../middlewares/authMiddleware");
 
 router.get("/login", isNotAuth, (req, res) => {
-  const { user } = req;
-  console.log({ user });
-
   res.render("user/login");
 });
 
@@ -27,13 +24,22 @@ router.get("/register", isNotAuth, (req, res) => {
 
 router.post("/register", isNotAuth, async (req, res) => {
   const { username, password, repeatPassword } = req.body;
-  await userService.register({
-    username,
-    password,
-    repeatPassword,
-  });
 
-  res.redirect("/users/login");
+  try {
+    await userService.register({
+      username,
+      password,
+      repeatPassword,
+    });
+
+    res.redirect("/users/login");
+  } catch (error) {
+    console.log(error.message);
+
+    res.cookie("error", error.message, { httpOnly: true });
+
+    res.redirect("/404");
+  }
 });
 
 router.get("/logout", isAuth, (req, res) => {
